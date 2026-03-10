@@ -4,7 +4,6 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 export default function App() {
-
   const hoje = new Date().toISOString().split("T")[0];
 
   const numeroInicial = Math.floor(Math.random() * 99999) + 1;
@@ -19,7 +18,6 @@ export default function App() {
   const reciboRef = useRef<HTMLDivElement>(null);
 
   const formatarValor = (valor: string) => {
-
     if (!valor) return "";
 
     let numero = valor.replace(",", ".");
@@ -31,17 +29,26 @@ export default function App() {
   };
 
   const formatarData = (data: string) => {
-
     if (!data) return "";
 
     const meses = [
-      "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-      "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
     ];
 
     const d = new Date(data);
 
-    const dia = d.getDate();
+    const dia = d.getDate() + 1;
     const mes = meses[d.getMonth()];
     const ano = d.getFullYear();
 
@@ -49,11 +56,10 @@ export default function App() {
   };
 
   const baixarPDF = async () => {
-
     if (!reciboRef.current) return;
 
     const canvas = await html2canvas(reciboRef.current, {
-      scale: 2
+      scale: 2,
     });
 
     const imgData = canvas.toDataURL("image/png");
@@ -70,7 +76,6 @@ export default function App() {
 
   return (
     <div className="container">
-
       <div className="formArea">
         <h2>Gerar Recibo</h2>
 
@@ -111,17 +116,12 @@ export default function App() {
           onChange={(e) => setReferente(e.target.value)}
         />
 
-        <button onClick={() => window.print()}>
-          Imprimir
-        </button>
+        <button onClick={() => window.print()}>Imprimir</button>
 
-        <button onClick={baixarPDF}>
-          Baixar PDF
-        </button>
+        <button onClick={baixarPDF}>Baixar PDF</button>
       </div>
 
       <div ref={reciboRef} className="recibo">
-
         <div className="topo">
           <div>
             <h1>RECIBO</h1>
@@ -150,21 +150,14 @@ export default function App() {
         </div>
 
         <div className="rodape">
-
-          <span>
-            Guapimirim, {formatarData(data)}.
-          </span>
+          <span>Guapimirim, {formatarData(data)}.</span>
 
           <div className="assinaturaArea">
             <div className="linha"></div>
             <span>{nomeRecebedor}</span>
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 }
-
